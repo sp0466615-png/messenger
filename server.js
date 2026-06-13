@@ -10,25 +10,27 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-// ================= PORT =================
 const PORT = process.env.PORT || 3000;
 
 // ================= PATHS =================
-const publicPath = path.join(__dirname, "../public");
-const uploadsPath = path.join(__dirname, "../uploads");
+const publicPath = __dirname; // root folder
+const uploadsPath = path.join(__dirname, "uploads");
 
 // ================= MIDDLEWARE =================
 app.use(express.json());
 
-// Serve frontend
 app.use(express.static(publicPath));
 
-// Serve uploads
 app.use("/uploads", express.static(uploadsPath));
 
 // ================= HOME ROUTE =================
 app.get("/", (req, res) => {
-    res.sendFile(path.join(publicPath, "index.html"));
+    res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// ================= CHAT ROUTE =================
+app.get("/chat", (req, res) => {
+    res.sendFile(path.join(__dirname, "chat.html"));
 });
 
 // ================= MULTER CONFIG =================
