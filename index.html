@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messenger App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="app">
+    <!-- Header -->
+    <div class="header">
+        <div class="profile">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="">
+            <div>
+                <h3>Messenger</h3>
+                <span>Online</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users -->
+    <div id="users"></div>
+    <!-- Chat Messages -->
+    <div id="chat"></div>
+    <!-- Input Area -->
+    <div class="input-area">
+
+        <input
+            type="text"
+            id="msg"
+            placeholder="Type a message..."
+            autocomplete="off"
+        >
+        <button onclick="sendMsg()">
+            Send
+        </button>
+    </div>
+
+    <!-- File Upload -->
+    <div class="file-area">
+        <input type="file" id="file">
+
+        <button onclick="sendFile()">
+            📎 File
+        </button>
+    </div>
+</div>
+
+<!-- Delete Popup -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <h2>Delete message?</h2>
+
+        <button onclick="deleteForEveryone()">
+            Delete for everyone
+        </button>
+
+        <button onclick="deleteForMe()">
+            Delete for me
+        </button>
+
+        <button onclick="closeModal()">
+            Cancel
+        </button>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/client.js"></script>
+
+</body>
+</html>

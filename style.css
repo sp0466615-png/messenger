@@ -1,0 +1,181 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#d9dbd5;
+    font-family:Arial, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.app{
+    width:450px;
+    height:90vh;
+    background:#ece5dd;
+    border-radius:15px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
+}
+
+.header{
+    background:#075e54;
+    color:white;
+    padding:15px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.profile img{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+}
+
+.profile span{
+    font-size:13px;
+    color:#d6d6d6;
+}
+
+#users{
+    background:#128c7e;
+    color:white;
+    padding:8px;
+}
+
+#chat{
+    flex:1;
+    overflow-y:auto;
+    padding:15px;
+    background:#efeae2;
+}
+
+.msg{
+    max-width:75%;
+    padding:10px;
+    margin:8px 0;
+    border-radius:10px;
+}
+
+.left{
+    background:white;
+    float:left;
+    clear:both;
+}
+
+.right{
+    background:#dcf8c6;
+    float:right;
+    clear:both;
+}
+
+.name{
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.chat-image{
+    width:220px;
+    border-radius:10px;
+    margin-top:8px;
+}
+
+.input-area,
+.file-area{
+    display:flex;
+    gap:10px;
+    padding:10px;
+    background:#f0f0f0;
+}
+
+#msg{
+    flex:1;
+    padding:12px;
+    border:none;
+    outline:none;
+    border-radius:25px;
+}
+
+button{
+    border:none;
+    background:#25d366;
+    color:white;
+    padding:12px 18px;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button:hover{
+    background:#128c7e;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.modal{
+    display:none;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.5);
+}
+
+.modal-content{
+    background:white;
+    width:400px;
+    margin:150px auto;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+}
+
+.modal-content button{
+    width:250px;
+    padding:15px;
+    margin:10px;
+    border:none;
+    border-radius:30px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+img,
+video{
+    user-select:none;
+    -webkit-user-drag:none;
+}
+
+audio{
+    width:250px;
+}
+
+.chat-image{
+    width:220px;
+    border-radius:10px;
+}
+
+iframe{
+    border:none;
+    border-radius:10px;
+}
