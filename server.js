@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -7,20 +9,32 @@ const multer = require("multer");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-require("dotenv").config();
 
-// static
-app.use(express.static(path.join(__dirname, "../public")));
-app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+// ================= PORT =================
+const PORT = process.env.PORT || 3000;
 
+// ================= PATHS =================
+const publicPath = path.join(__dirname, "../public");
+const uploadsPath = path.join(__dirname, "../uploads");
+
+// ================= MIDDLEWARE =================
+app.use(express.json());
+
+// Serve frontend
+app.use(express.static(publicPath));
+
+// Serve uploads
+app.use("/uploads", express.static(uploadsPath));
+
+// ================= HOME ROUTE =================
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
+    res.sendFile(path.join(publicPath, "index.html"));
 });
 
-// file upload config
+// ================= MULTER CONFIG =================
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../uploads"));
+        cb(null, uploadsPath);
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + "-" + file.originalname);
@@ -29,13 +43,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// upload API
+// ================= UPLOAD API =================
 app.post("/upload", upload.single("file"), (req, res) => {
-
     if (!req.file) {
-        return res.status(400).json({
-            error: "Please select a file"
-        });
+        return res.status(400).json({ error: "No file selected" });
     }
 
     res.json({
@@ -45,41 +56,28 @@ app.post("/upload", upload.single("file"), (req, res) => {
     });
 });
 
-// socket
+// ================= SOCKET.IO =================
 io.on("connection", (socket) => {
-    console.log("User:", socket.id);
+    console.log("User connected:", socket.id);
 
-    // message
     socket.on("message", (data) => {
         io.emit("message", data);
     });
 
-    // file message
     socket.on("fileMessage", (data) => {
         io.emit("fileMessage", data);
     });
 
-    // delete message (chain delete)
     socket.on("deleteMessage", (id) => {
         io.emit("deleteMessage", id);
     });
 
+    socket.on("disconnect", () => {
+        console.log("User disconnected:", socket.id);
+    });
 });
 
-app.use("/uploads/images", express.static(path.join(__dirname,"../uploads/images")));
-
-app.use("/uploads/pdf", express.static(path.join(__dirname,"../uploads/pdf")));
-
-app.use("/uploads/doc", express.static(path.join(__dirname,"../uploads/doc")));
-
-app.use("/uploads/excel", express.static(path.join(__dirname,"../uploads/excel")));
-
-app.use("/uploads/audio", express.static(path.join(__dirname,"../uploads/audio")));
-
-app.use("/uploads/video", express.static(path.join(__dirname,"../uploads/video")));
-
-const PORT = process.env.PORT
-
+// ================= START SERVER =================
 server.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
